@@ -1,4 +1,4 @@
-/* Cinema Studio front end: plain JavaScript, no build step. */
+/* Home Hollywood Toolbox front end: plain JavaScript, no build step. */
 
 const CAMERA_MOVES = [
   "slow dolly in",

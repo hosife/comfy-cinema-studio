@@ -1,7 +1,7 @@
-# comfy-cinema-studio
+# Home Hollywood Toolbox
 
-An open-source cinematic creation app powered by ComfyUI. The working name is a
-placeholder.
+An open-source cinematic creation app powered by ComfyUI. The GitHub repository
+keeps its original slug, `comfy-cinema-studio`, until Eric decides to rename it.
 
 **Status: first working version, 7 November 2026.** One page, two recipes
 (text to video and image to video with LTX-2.5), any ComfyUI backend over

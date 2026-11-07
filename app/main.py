@@ -39,7 +39,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     store = ShotStore(client, settings.output_dir)
     uploads_dir = settings.output_dir / "uploads"
 
-    app = FastAPI(title="comfy-cinema-studio", version="0.1.0")
+    app = FastAPI(title="Home Hollywood Toolbox", version="0.1.0")
     app.state.settings = settings
     app.state.client = client
     app.state.store = store

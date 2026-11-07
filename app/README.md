@@ -1,6 +1,6 @@
 # app
 
-A one-page shot studio in front of any ComfyUI backend.
+Home Hollywood Toolbox: a one-page shot studio in front of any ComfyUI backend.
 
 ```
 app/
