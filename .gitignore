@@ -61,3 +61,6 @@ desktop.ini
 .idea/
 .vscode/
 *.zip
+
+# --- local editor/agent config ---
+.claude/

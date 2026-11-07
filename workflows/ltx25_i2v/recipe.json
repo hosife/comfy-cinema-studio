@@ -1,0 +1,55 @@
+{
+  "name": "ltx25_i2v",
+  "title": "Image to video · LTX-2.5",
+  "kind": "i2v",
+  "description": "Animate a still you own into a 1 to 10 second clip with sound. The still becomes the first frame.",
+  "workflow": "workflow.api.json",
+  "output_node": "75",
+  "inputs": {
+    "image": {
+      "node": "395", "field": "image", "type": "image", "required": true,
+      "label": "Start frame", "help": "Name returned by the backend's /upload/image, not a local path."
+    },
+    "prompt": {
+      "node": "398:376", "field": "value", "type": "string", "required": true,
+      "label": "Prompt", "help": "Start with 'Use the provided start image as the first frame.' then describe the move."
+    },
+    "negative": {
+      "node": "398:373", "field": "text", "type": "string",
+      "default": "pc game, console game, video game, cartoon, childish, ugly",
+      "label": "Negative prompt"
+    },
+    "seconds": {
+      "node": "398:362", "field": "value", "type": "int", "default": 5, "min": 1, "max": 10,
+      "label": "Seconds"
+    },
+    "fps": {
+      "node": "398:361", "field": "value", "type": "int", "default": 24, "min": 12, "max": 30,
+      "label": "Frame rate"
+    },
+    "aspect": {
+      "node": "403", "field": "aspect_ratio", "type": "choice", "default": "16:9 (Widescreen)",
+      "choices": [
+        "16:9 (Widescreen)", "21:9 (Ultrawide)", "4:3 (Standard)", "3:2 (Photo)",
+        "1:1 (Square)", "9:16 (Portrait Widescreen)", "3:4 (Portrait Standard)", "2:3 (Portrait Photo)"
+      ],
+      "label": "Aspect ratio", "help": "Match the still's shape; the frame is resized to fit."
+    },
+    "megapixels": {
+      "node": "403", "field": "megapixels", "type": "float", "default": 0.9, "min": 0.3, "max": 2.0,
+      "label": "Resolution (megapixels)"
+    },
+    "motion": {
+      "node": "398:357", "field": "strength", "type": "float", "default": 0.7, "min": 0.3, "max": 1.0, "step": 0.05,
+      "label": "Motion", "help": "Image conditioning strength on the first pass. Lower keeps the still intact."
+    },
+    "seed": {
+      "node": "398:339", "field": "noise_seed", "type": "seed", "default": "random",
+      "label": "Seed"
+    },
+    "prefix": {
+      "node": "75", "field": "filename_prefix", "type": "string", "default": "video/shot",
+      "label": "Output name"
+    }
+  }
+}

@@ -3,9 +3,10 @@
 An open-source cinematic creation app powered by ComfyUI. The working name is a
 placeholder.
 
-**Status: empty scaffold, 7 November 2026.** There is no application code yet.
-This repository exists so that two collaborators, Claude and Hermes, can start
-from the same place with the same rules.
+**Status: first working version, 7 November 2026.** One page, two recipes
+(text to video and image to video with LTX-2.5), any ComfyUI backend over
+HTTP. Rendered its first shot on Comfy Cloud the day it was written. See
+`docs/DECISIONS.md` for the choices made and why.
 
 ## What it is meant to become
 
@@ -14,6 +15,33 @@ written brief in, storyboards and video shots out, with ComfyUI doing the
 generation behind an HTTP API. The product category is the one popularised by
 Higgsfield. Nothing here copies that product's code, assets, names or
 branding, and the project makes no claim about any competition or hackathon.
+
+## Run it
+
+Needs Python 3.10 or newer and a ComfyUI backend you can reach.
+
+```
+pip install -r requirements.txt
+copy .env.example .env        (macOS/Linux: cp .env.example .env)
+```
+
+Fill in `.env`:
+
+- **Comfy Cloud:** `COMFYUI_URL=https://cloud.comfy.org/api` and a workspace
+  API key in `COMFY_CLOUD_API_KEY`. Renders cost credits on that workspace.
+- **Your own ComfyUI:** `COMFYUI_URL=http://127.0.0.1:8188` (or the box's
+  address), no key. The LTX-2.5 weights must be installed there; each
+  workflow README lists them.
+
+Then:
+
+```
+python -m app
+```
+
+Open http://127.0.0.1:8787. Pick a recipe, drop a still you own (image to
+video), write the shot, click **Render shot**. Finished clips appear on the
+board and are saved under `outputs/`, which Git ignores.
 
 ## Ground rules
 
@@ -39,26 +67,26 @@ branding, and the project makes no claim about any competition or hackathon.
 Each collaborator commits only to its own branches. Merges into `main` are
 reviewed by Eric. See `CONTRIBUTING.md`.
 
-## Generation backend
+## How it works
 
-The development machine has no NVIDIA GPU, so local ComfyUI is not an option
-for rendering. Two backends are on the table and recorded in
-`docs/ENVIRONMENT.md`:
+```
+browser page  ->  FastAPI (app/)  ->  ComfyUI HTTP API  ->  Comfy Cloud or any ComfyUI
+                      |
+                      +-- workflows/<recipe>/   API-format graph + recipe.json (friendly inputs)
+                      +-- outputs/              uploads, rendered media, shots.json (ignored by Git)
+```
 
-1. **Comfy Cloud** through `comfy-cli`: a packaged ComfyUI build served as a
-   paid serverless endpoint.
-2. **Any reachable ComfyUI** over its standard HTTP API (a rented GPU box, a
-   collaborator's machine).
-
-The application code should talk to ComfyUI's HTTP API only, so that either
-backend works unchanged.
+The backend never depends on a vendor SDK. It uploads with `/upload/image`,
+submits with `/prompt`, polls `/history` (Comfy Cloud: `/history_v2`) and
+downloads with `/view`. `docs/ENVIRONMENT.md` records the backend quirks met
+so far.
 
 ## Layout
 
 ```
-app/          application code (empty)
-workflows/    ComfyUI workflow JSON in API format, with a README per workflow
-docs/         decisions, environment notes, collaboration protocol
+app/          FastAPI backend and the static one-page front end
+workflows/    one folder per recipe: workflow.api.json, recipe.json, README.md
+docs/         decisions, environment notes
 ```
 
 ## Licence

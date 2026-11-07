@@ -17,6 +17,22 @@
 - The Creator plan does not accept governance/policy blocks in a build definition.
 - Read `comfy skills show comfy-build` and `comfy skills show comfy-deploy` before touching either.
 
+## Comfy Cloud as a ComfyUI API (learned 7 November 2026)
+
+- Base URL `https://cloud.comfy.org/api`. Auth is `X-API-Key: <workspace key>`
+  or `Authorization: Bearer <OAuth token>`; the token comfy-cli holds expires
+  after about an hour, so the app should be given an API key.
+- `/history/<id>` answers 404 "not available on Comfy Cloud"; use
+  `/history_v2/<id>` (same shape) or `/jobs/<id>`.
+- `/view` answers 302 to signed Google Cloud Storage; follow redirects.
+- Status polling is rate limited (429, with `Retry-After`). Ask about a running
+  job every 5 s at most and back off when told.
+- `/upload/image` renames the file to its sha256; use the returned `name`.
+- `/system_stats` reports `cloud_version` and `comfyui_version` (v0.44.2 on
+  7 November 2026) with empty device data.
+- Prices seen: 5 s LTX-2.5 clips cost 4 to 11 credits each; 0.266 credits per
+  GPU second according to Comfy's FAQ.
+
 ## RunPod (reported by Hermes, 7 November 2026, unverified here)
 
 - A stopped Pod named "Sun Sun Studio" (id wo8ouig7ed7ooa) with one RTX 4090 in EUR-IS-2 and about

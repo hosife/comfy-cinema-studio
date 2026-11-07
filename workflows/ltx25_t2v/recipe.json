@@ -1,0 +1,47 @@
+{
+  "name": "ltx25_t2v",
+  "title": "Text to video · LTX-2.5",
+  "kind": "t2v",
+  "description": "A 1 to 10 second clip with sound from a written prompt. No input image.",
+  "workflow": "workflow.api.json",
+  "output_node": "75",
+  "inputs": {
+    "prompt": {
+      "node": "405:376", "field": "value", "type": "string", "required": true,
+      "label": "Prompt", "help": "Describe the shot: subject, camera move, light, mood."
+    },
+    "negative": {
+      "node": "405:373", "field": "text", "type": "string",
+      "default": "pc game, console game, video game, cartoon, childish, ugly",
+      "label": "Negative prompt"
+    },
+    "seconds": {
+      "node": "405:362", "field": "value", "type": "int", "default": 5, "min": 1, "max": 10,
+      "label": "Seconds"
+    },
+    "fps": {
+      "node": "405:361", "field": "value", "type": "int", "default": 24, "min": 12, "max": 30,
+      "label": "Frame rate"
+    },
+    "aspect": {
+      "node": "409", "field": "aspect_ratio", "type": "choice", "default": "16:9 (Widescreen)",
+      "choices": [
+        "16:9 (Widescreen)", "21:9 (Ultrawide)", "4:3 (Standard)", "3:2 (Photo)",
+        "1:1 (Square)", "9:16 (Portrait Widescreen)", "3:4 (Portrait Standard)", "2:3 (Portrait Photo)"
+      ],
+      "label": "Aspect ratio"
+    },
+    "megapixels": {
+      "node": "409", "field": "megapixels", "type": "float", "default": 0.9, "min": 0.3, "max": 2.0,
+      "label": "Resolution (megapixels)", "help": "0.9 gives about 1280x704 at 16:9."
+    },
+    "seed": {
+      "node": "405:339", "field": "noise_seed", "type": "seed", "default": "random",
+      "label": "Seed", "help": "Leave empty for a new seed each time; reuse a seed to repeat a take."
+    },
+    "prefix": {
+      "node": "75", "field": "filename_prefix", "type": "string", "default": "video/shot",
+      "label": "Output name"
+    }
+  }
+}
