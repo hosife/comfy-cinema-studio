@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home Hollywood Toolbox</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">Home Hollywood Toolbox</span>
+      <span class="brand-sub">indie production, your own shots</span>
+    </div>
+    <div class="backend" id="backend">
+      <span class="dot"></span>
+      <span id="backend-text">checking backend…</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel form-panel">
+      <h2>New shot</h2>
+
+      <label class="field">
+        <span class="field-label">Recipe</span>
+        <select id="recipe"></select>
+        <span class="field-help" id="recipe-help"></span>
+      </label>
+
+      <div class="field" id="image-field" hidden>
+        <span class="field-label">Start frame <em>required</em></span>
+        <div class="dropzone" id="dropzone">
+          <input type="file" id="image-input" accept=".png,.jpg,.jpeg,.webp" hidden />
+          <img id="image-preview" alt="" hidden />
+          <div class="dropzone-text" id="dropzone-text">
+            Drop a still here or <button type="button" class="link" id="image-browse">choose a file</button>
+          </div>
+        </div>
+      </div>
+
+      <label class="field">
+        <span class="field-label">Prompt <em>required</em></span>
+        <textarea id="prompt" rows="5" placeholder="What the camera sees, how it moves, the light, the mood."></textarea>
+      </label>
+
+      <div class="field">
+        <span class="field-label">Camera moves <small>click to add</small></span>
+        <div class="chips" id="chips"></div>
+      </div>
+
+      <div class="field-row">
+        <label class="field">
+          <span class="field-label">Seconds</span>
+          <input type="number" id="seconds" min="1" max="10" step="1" value="5" />
+        </label>
+        <label class="field">
+          <span class="field-label">Aspect</span>
+          <select id="aspect"></select>
+        </label>
+        <label class="field">
+          <span class="field-label">Seed</span>
+          <input type="text" id="seed" placeholder="random" />
+        </label>
+      </div>
+
+      <div class="field-row" id="motion-row" hidden>
+        <label class="field grow">
+          <span class="field-label">Motion <small id="motion-value">0.7</small></span>
+          <input type="range" id="motion" min="0.3" max="1" step="0.05" value="0.7" />
+          <span class="field-help">Lower keeps the still intact; higher lets the model move more.</span>
+        </label>
+      </div>
+
+      <details class="advanced">
+        <summary>Advanced</summary>
+        <label class="field">
+          <span class="field-label">Negative prompt</span>
+          <input type="text" id="negative" />
+        </label>
+        <label class="field">
+          <span class="field-label">Frame rate</span>
+          <input type="number" id="fps" min="12" max="30" step="1" value="24" />
+        </label>
+      </details>
+
+      <button type="button" class="primary" id="render">Render shot</button>
+      <p class="note" id="cost-note">On 7 November 2026 a 5‑second LTX‑2.5 shot cost 4 to 7 Comfy Cloud credits, under 0.05 USD.</p>
+      <p class="error" id="form-error" hidden></p>
+    </section>
+
+    <section class="panel board-panel">
+      <div class="board-head">
+        <h2>Shots</h2>
+        <span class="muted" id="board-count"></span>
+      </div>
+      <div class="board" id="board">
+        <p class="muted empty" id="board-empty">No shots yet. Your first render will appear here.</p>
+      </div>
+    </section>
+  </main>
+
+  <template id="shot-card">
+    <article class="card">
+      <div class="card-media"></div>
+      <div class="card-body">
+        <div class="card-title"></div>
+        <div class="card-meta"></div>
+        <div class="card-prompt"></div>
+        <div class="card-actions">
+          <a class="card-download" download hidden>Download</a>
+          <button type="button" class="card-reuse link">Reuse prompt</button>
+          <button type="button" class="card-delete link danger">Remove</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="/app.js"></script>
+</body>
+</html>
